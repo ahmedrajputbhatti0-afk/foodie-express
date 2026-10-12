@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Foodie Express</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ========== LOGIN PAGE (shown first) ========== -->
+<div id="loginPage" class="login-page">
+  <form id="loginForm" class="login-box" novalidate>
+    <div class="logo big">🍔 Foodie Express</div>
+    <p class="muted">Sign in to order your favourite food</p>
+
+    <label for="username">Username</label>
+    <input type="text" id="username" autocomplete="off" placeholder="Enter username">
+
+    <label for="password">Password</label>
+    <div class="pass-row">
+      <input type="password" id="password" placeholder="Enter password">
+      <button type="button" id="togglePass" class="btn small ghost">Show</button>
+    </div>
+
+    <p id="loginError" class="error" role="alert"></p>
+    <button type="submit" class="btn">Login</button>
+    <p class="note">Demo only: this login is checked in frontend JavaScript, which is not secure for a real website.</p>
+  </form>
+</div>
+
+<!-- ========== MAIN WEBSITE (hidden until login) ========== -->
+<div id="mainSite" class="hidden">
+
+  <header class="header">
+    <div class="logo">🍔 Foodie Express</div>
+    <button id="menuToggle" class="menu-toggle" aria-label="Toggle navigation">☰</button>
+    <nav id="nav" class="nav">
+      <a href="#home">Home</a>
+      <a href="#menu">Menu</a>
+      <a href="#about">About Us</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <button id="cartBtn" class="btn small ghost" aria-label="Open cart">🛒 <span id="cartCount">0</span></button>
+      <button id="logoutBtn" class="btn small">Logout</button>
+    </div>
+  </header>
+
+  <div id="welcomeMsg" class="welcome"></div>
+
+  <!-- Home / Hero -->
+  <section id="home" class="hero">
+    <div class="hero-text">
+      <h1>Delicious Food Delivered to Your Doorstep!</h1>
+      <p>Fresh ingredients, hot from the kitchen and packed with flavour. From crispy zingers to fragrant biryani, we bring tasty food to you fast.</p>
+      <a href="#menu" id="orderNow" class="btn">Order Now</a>
+    </div>
+    <img class="hero-img" alt="A table full of delicious food"
+         src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80"
+         onerror="this.replaceWith(fallbackBox('🍽️'))">
+  </section>
+
+  <!-- Menu -->
+  <section id="menu" class="section">
+    <h2>Our Menu</h2>
+    <div class="filters">
+      <input type="search" id="searchBox" placeholder="Search food by name...">
+      <div id="categoryButtons" class="cats"></div>
+    </div>
+    <div id="menuGrid" class="grid"></div>
+    <p id="noResults" class="empty hidden">No food items match your search. Try another name or category.</p>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="section alt">
+    <h2>About Us</h2>
+    <p class="about-text">Foodie Express serves fresh, delicious and affordable food. Every meal is prepared with quality ingredients and delivered with a smile, so you can enjoy restaurant taste at home.</p>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section">
+    <h2>Contact Us</h2>
+    <form id="contactForm" class="card-form" novalidate>
+      <label for="cName">Name</label>
+      <input type="text" id="cName" placeholder="Your name">
+      <label for="cEmail">Email</label>
+      <input type="email" id="cEmail" placeholder="you@example.com">
+      <label for="cMessage">Message</label>
+      <textarea id="cMessage" rows="4" placeholder="Write your message"></textarea>
+      <p id="contactMsg" class="error" role="alert"></p>
+      <button type="submit" class="btn">Send Message</button>
+      <p class="note">Demo form: it does not send real emails.</p>
+    </form>
+  </section>
+
+  <footer class="footer">
+    <div class="logo">🍔 Foodie Express</div>
+    <div class="footer-links">
+      <a href="#home">Home</a><a href="#menu">Menu</a><a href="#about">About Us</a><a href="#contact">Contact</a>
+    </div>
+    <p>Made with love for food lovers.</p>
+    <p class="small-text">&copy; 2026 Foodie Express. All rights reserved.</p>
+  </footer>
+</div>
+
+<!-- ========== CART PANEL ========== -->
+<aside id="cartPanel" class="cart-panel" aria-label="Shopping cart">
+  <div class="panel-head"><h3>Your Cart</h3><button id="closeCart" class="btn small ghost">Close</button></div>
+  <div id="cartItems" class="cart-items"></div>
+  <div class="totals">
+    <div><span>Subtotal</span><span id="subtotal">Rs. 0</span></div>
+    <div><span>Delivery fee</span><span id="delivery">Rs. 0</span></div>
+    <div class="grand"><span>Total</span><span id="total">Rs. 0</span></div>
+  </div>
+  <p id="cartMsg" class="error" role="alert"></p>
+  <button id="checkoutBtn" class="btn full">Checkout</button>
+</aside>
+
+<!-- ========== CHECKOUT MODAL ========== -->
+<div id="checkoutModal" class="modal hidden">
+  <div class="modal-box">
+    <form id="checkoutForm" novalidate>
+      <h3>Checkout</h3>
+      <label for="oName">Full name</label>
+      <input type="text" id="oName">
+      <label for="oPhone">Phone number</label>
+      <input type="tel" id="oPhone" placeholder="03XXXXXXXXX">
+      <label for="oAddress">Delivery address</label>
+      <textarea id="oAddress" rows="2"></textarea>
+      <label for="oNotes">Order instructions (optional)</label>
+      <textarea id="oNotes" rows="2"></textarea>
+      <label for="oPay">Payment method</label>
+      <select id="oPay">
+        <option value="Cash on Delivery">Cash on Delivery</option>
+        <option value="Online Payment (demo)">Online Payment (demo)</option>
+      </select>
+      <p id="orderError" class="error" role="alert"></p>
+      <div class="row">
+        <button type="submit" class="btn">Place Order</button>
+        <button type="button" id="cancelCheckout" class="btn ghost">Cancel</button>
+      </div>
+      <p class="note">Demo website: no real payment or delivery is connected.</p>
+    </form>
+    <div id="confirmBox" class="hidden confirm">
+      <h3>✅ Order placed!</h3>
+      <p>Your order number is <strong id="orderNo"></strong></p>
+      <p>Total amount: <strong id="orderTotal"></strong></p>
+      <p class="note">This is a demonstration. No real order was made.</p>
+      <button id="closeConfirm" class="btn">Done</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
